@@ -16,16 +16,37 @@ export class HomePage {
   	private nativeStorage: NativeStorage) {
   }
   
-  data = []
-
+  allItems = []
+  currentItems = []
+  index: number = 20
+  
   ionViewDidLoad() {
-    this.request./*nombre funcion*/.subscribe(response => {
-      console.log(response);
+    this.request.getCoins().subscribe(response => {
       for (let i = 0; i < response.data.length; i++) {
-        this.data.push(response.data[i]);
+        var { name, symbol, id } = response.data[i]
+        this.allItems.push({ name, symbol, id })
       }
-      console.log(this.data);
-    });
+      this.currentItems = this.allItems.splice(0, this.index)
+      console.log(JSON.stringify(this.currentItems))
+    },
+     err => {
+       console.error(err.message)
+     })
+  }
+
+  scrollDown(event) {
+    for (var i=this.index; i<this.index+20; i++){
+      this.currentItems.push(this.allItems[i])
+    }
+    this.index += 20
+    event.complete()
+    console.log(this.currentItems.length)
+  }
+
+  certainCoin(id) {
+    this.request.coinDetails(id).subscribe(response => {
+      console.log(JSON.stringify(response))
+    })
   }
 
   set() {
