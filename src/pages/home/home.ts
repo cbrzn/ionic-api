@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { NavController} from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
 import { NativeStorage } from "@ionic-native/native-storage";
 
-
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+    selector: 'page-home',
+    templateUrl: 'home.html',
 })
 export class HomePage {
 
@@ -49,19 +48,23 @@ export class HomePage {
     })
   }
 
-  set() {
-    this.nativeStorage
-      .setItem("myitem", {test:'test'}	)
-      .then(() => {console.log("Stored item!");},
-        error => console.error("Error storing item", error));
-  }
+    set() {
+        this.nativeStorage
+            .setItem("myitem", {
+                test: 'test'
+            })
+            .then(() => {
+                    console.log("Stored item!");
+                },
+                error => console.error("Error storing item", error));
+    }
 
-  get() {
-    this.nativeStorage
-      .getItem("myitem")
-      .then(data => {
-        console.log(data);
-        alert(JSON.stringify(data))
-      }, error => console.error(error));
-  }
+    get() {
+        this.nativeStorage
+            .getItem("myitem")
+            .then(data => {
+                console.log(data);
+                alert(JSON.stringify(data))
+            }, error => console.error(error));
+    }
 }

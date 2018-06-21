@@ -8,7 +8,7 @@ import { NativeStorage } from "@ionic-native/native-storage";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { Sender } from '../providers/sender/sender';
+import { SenderProvider } from '../providers/sender/sender';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { Sender } from '../providers/sender/sender';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Sender,
+    SenderProvider,
     NativeStorage
   ]
 })
