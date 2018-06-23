@@ -8,12 +8,21 @@ import { NativeStorage } from "@ionic-native/native-storage";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { CoinDetailsPage } from '../pages/coin-details/coin-details';
+import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { Sender } from '../providers/sender/sender';
+import { HeaderMenuComponent } from '../components/header-menu/header-menu';
+import { SessionService } from '../providers/session-service/session-service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    CoinDetailsPage,
+    LoginPage,
+    SignupPage,
+    HeaderMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -23,14 +32,19 @@ import { Sender } from '../providers/sender/sender';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    CoinDetailsPage,
+    LoginPage,
+    SignupPage,
+    HeaderMenuComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Sender,
-    NativeStorage
+    NativeStorage,
+    SessionService
   ]
 })
 

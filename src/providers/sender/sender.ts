@@ -14,8 +14,13 @@ export class Sender {
     console.log('Hello Sender Provider');
   }
 
-  getCoins(): Observable<any> {
+  getAllCoins(): Observable<any> {
     return this.http.get<any>('https://api.coinmarketcap.com/v2/listings/')
+  }
+
+
+  getCoinsByRank(index): Observable<any> {
+    return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/?start=${index}`)
   }
 
   coinDetails(id): Observable<any> {

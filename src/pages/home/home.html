@@ -1,21 +1,23 @@
 <ion-header>
-	<ion-navbar>
-		<ion-title>
-			Ionic Blank
-		</ion-title>
-	</ion-navbar>
-</ion-header>
+		<ion-navbar>
+		  <ion-title>
+			Home
+		  </ion-title>
+		  <ion-buttons right>
+			<button ion-button icon-only menuToggle>
+			  <ion-icon name='menu'></ion-icon>
+			</button>
+		  </ion-buttons>
+		</ion-navbar>
+	  </ion-header>
 
-<ion-content padding>
-
+<ion-content>
 	<div>
-		<button ion-button class="set" (click)="set()">Set</button>
-		<button ion-button class="get" (click)="get()">Get</button>
+		<ion-buttons (click)='byRank()'>TEST</ion-buttons><ion-input placeholder="Search coin"></ion-input>
 	</div>
-
 	<ion-list>
 		<ion-item *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
-			{{item.name}} {{item.symbol}}
+					{{item.name}} {{item.symbol}} {{item.rank}}
 		</ion-item>
 	</ion-list>
 	<ion-infinite-scroll (ionInfinite)="scrollDown($event)">
