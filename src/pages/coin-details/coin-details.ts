@@ -14,11 +14,15 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class CoinDetailsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  coin:any = this.params.get('coin')
+
+  constructor(
+    public navCtrl: NavController, 
+    public params: NavParams,
+  ) {  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CoinDetailsPage');
+    console.log(JSON.stringify(this.coin))
   }
 
 }

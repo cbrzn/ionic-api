@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
-import { NativeStorage } from "@ionic-native/native-storage";
+// import { NativeStorage } from "@ionic-native/native-storage";
 import { CoinDetailsPage } from '../coin-details/coin-details'
 import { AlertController } from 'ionic-angular';
 import { SessionService } from '../../providers/session-service/session-service';
@@ -13,11 +13,12 @@ import { SessionService } from '../../providers/session-service/session-service'
 })
 export class HomePage {
   
-  username: string;
+  username:string;
+  all:boolean = true
   constructor(
   	public navCtrl: NavController,
   	private request: Sender,
-    private nativeStorage: NativeStorage,
+    // private nativeStorage: NativeStorage,
     private alertCtrl: AlertController,
     private session: SessionService,
     public loadingCtrl: LoadingController
@@ -27,7 +28,6 @@ export class HomePage {
   allItems = []
   currentItems = []
   index: number = 20
-  view: string = 'all'
   all_index:number = 0
   
   ionViewDidLoad() {
@@ -40,8 +40,10 @@ export class HomePage {
       content: 'Loading coins'
     })
     loading.present()
+    
     this.request.getAllCoins().subscribe(response => {
       loading.dismiss()
+      this.all = true
       for (var i=0; i<response.data.length; i++) {
         var { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
@@ -61,12 +63,12 @@ export class HomePage {
     })
   }
 
-  byRank(index) {
+  byRank() {
     let loading = this.loadingCtrl.create({
       content: 'Loading coins'
     })
     loading.present()
-    this.view = 'rank'
+    this.all = false
     this.allItems = []
     this.currentItems = []
     this.index = 20
@@ -91,7 +93,7 @@ export class HomePage {
   }
 
   scrollDown(event) {
-    if (this.view == 'all') {
+    if (this.all == true) {
       for (var i=this.index; i<this.index+20; i++){
         this.currentItems.push(this.allItems[i])
       }
@@ -121,29 +123,26 @@ export class HomePage {
   }
 
   certainCoin(id) {
-    this.request.coinDetails(id).subscribe(response => {
-      console.log(JSON.stringify(response))
+    let loading = this.loadingCtrl.create({
+      content: 'Loading coin details'
     })
-    this.navCtrl.push(CoinDetailsPage);
+    loading.present()
+    this.request.coinDetails(id).subscribe(response => {
+      loading.dismiss()
+      const coin = response.data
+      this.navCtrl.push(CoinDetailsPage, {
+        coin
+      });
+    }, err => {
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        this.navCtrl.setRoot(HomePage)
+      })
+    })
   }
-
-    set() {
-        this.nativeStorage
-            .setItem("myitem", {
-                test: 'test'
-            })
-            .then(() => {
-                    console.log("Stored item!");
-                },
-                error => console.error("Error storing item", error));
-    }
-
-    get() {
-        this.nativeStorage
-            .getItem("myitem")
-            .then(data => {
-                console.log(data);
-                alert(JSON.stringify(data))
-            }, error => console.error(error));
-    }
 }

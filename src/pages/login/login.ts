@@ -20,7 +20,6 @@ import { SessionService } from '../../providers/session-service/session-service'
 })
 export class LoginPage {
   private user: FormGroup
-  username: string = ''
   constructor(
     private formBuilder: FormBuilder, 
     private nativeStorage: NativeStorage, 

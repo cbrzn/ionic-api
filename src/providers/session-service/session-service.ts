@@ -13,12 +13,13 @@ export class SessionService {
   constructor(public http: HttpClient) {
     this.username
   }
+  
+  setUser(username:string) {
+    this.username = username
+  }
 
   getUser() {
     return this.username
   }
 
-  setUser(username:string) {
-    this.username = username
-  }
 }

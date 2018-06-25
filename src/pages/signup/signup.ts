@@ -20,9 +20,6 @@ import { SessionService } from '../../providers/session-service/session-service'
 })
 export class SignupPage {
   private user: FormGroup
-  username: string = ''
-  password: string = ''
-  password_confirmation: string = ''
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 

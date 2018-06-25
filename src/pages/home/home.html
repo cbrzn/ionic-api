@@ -3,7 +3,7 @@
 		  <ion-title>
 			Home
 		  </ion-title>
-		  <ion-buttons right>
+		  <ion-buttons right 	*ngIf="username == null">
 			<button ion-button icon-only menuToggle>
 			  <ion-icon name='menu'></ion-icon>
 			</button>
@@ -11,13 +11,19 @@
 		</ion-navbar>
 	  </ion-header>
 
-<ion-content>
-	<div>
-		<ion-buttons (click)='byRank()'>TEST</ion-buttons><ion-input placeholder="Search coin"></ion-input>
+<ion-content padding>
+	<div *ngIf="all">
+			<h1> ALL COINS</h1>
 	</div>
+	<div *ngIf="all == false">
+			<h1> COINS BY RANK </h1>
+	</div>
+		<ion-input placeholder="Search coin"></ion-input>
+			<button *ngIf="all" (click)='byRank()'>SHOW BY RANK</button>
+			<button *ngIf="all == false" (click)='allCoins()'>SHOW ALL COINS</button>
 	<ion-list>
 		<ion-item *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
-					{{item.name}} {{item.symbol}} {{item.rank}}
+			{{item.name}} {{item.symbol}} {{item.rank}}
 		</ion-item>
 	</ion-list>
 	<ion-infinite-scroll (ionInfinite)="scrollDown($event)">
@@ -25,3 +31,23 @@
 	</ion-infinite-scroll>
 
 </ion-content>
+
+<ion-footer *ngIf="username != null">
+		<ion-toolbar>
+			<ion-col col-4>
+					<button ion-button color="light">
+						Favorites
+					</button>
+			</ion-col>
+			<ion-col col-4>
+						<button ion-button color="light">
+							Home
+						</button>
+				</ion-col>
+				<ion-col col-4>
+					<button ion-button color="light">
+						Account
+					</button>
+			</ion-col>
+			</ion-toolbar>
+	</ion-footer>
