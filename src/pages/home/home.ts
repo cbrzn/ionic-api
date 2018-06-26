@@ -32,7 +32,19 @@ export class HomePage {
   
   ionViewDidLoad() {
     this.allCoins()
-  }
+  } 
+
+  compare = (a,b) => {
+    a = a.rank
+    b = b.rank
+    let comparison = 0
+    if (a > b) {
+    comparison = 1
+    } else if ( a < b) {
+        comparison = -1
+    }
+    return comparison
+  } 
 
 
   allCoins() {
@@ -78,9 +90,11 @@ export class HomePage {
         var { name, symbol, id, rank } = response.data[identifier]
         this.allItems.push({ name, symbol, id, rank })
       }
-      // console.log(JSON.stringify(this.allItems))
-      this.currentItems = this.allItems.splice(0, this.index)
-      this.all_index += 101
+      this.allItems.sort(this.compare)  
+      for (var i=0; i<this.index; i++){
+        this.currentItems.push(this.allItems[i])
+      }
+      this.all_index += 100
     },
     err => {
       let alert = this.alertCtrl.create({
@@ -100,13 +114,18 @@ export class HomePage {
       this.index += 20
       event.complete()
     } else {
-      if (this.currentItems.length == this.allItems.length) {
+      if (this.currentItems.length >= this.allItems.length) {
         this.request.getCoinsByRank(this.all_index).subscribe(response => {
           for (var identifier in response.data) {
             var { name, symbol, id, rank } = response.data[identifier]
             this.allItems.push({ name, symbol, id, rank })
           }
-          this.currentItems = this.allItems.splice(this.index, this.index+20)
+          this.allItems.sort(this.compare)
+          for (var i=this.index; i<this.index+20; i++){
+            this.currentItems.push(this.allItems[i])
+          }
+          this.index += 20
+          this.all_index += 100
           event.complete()
         },
         err => {
