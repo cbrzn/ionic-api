@@ -14,6 +14,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { Sender } from '../providers/sender/sender';
 import { HeaderMenuComponent } from '../components/header-menu/header-menu';
 import { SessionService } from '../providers/session-service/session-service';
+import { AccountPage } from '../pages/account/account';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SessionService } from '../providers/session-service/session-service';
     CoinDetailsPage,
     LoginPage,
     SignupPage,
-    HeaderMenuComponent
+    HeaderMenuComponent,
+    AccountPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { SessionService } from '../providers/session-service/session-service';
     CoinDetailsPage,
     LoginPage,
     SignupPage,
-    HeaderMenuComponent
+    HeaderMenuComponent,
+    AccountPage
   ],
   providers: [
     StatusBar,

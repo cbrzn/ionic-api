@@ -5,6 +5,7 @@ import { Sender } from "../../providers/sender/sender";
 import { CoinDetailsPage } from '../coin-details/coin-details'
 import { AlertController } from 'ionic-angular';
 import { SessionService } from '../../providers/session-service/session-service';
+import { AccountPage } from '../account/account';
 
 
 @Component({
@@ -34,6 +35,10 @@ export class HomePage {
     this.allCoins()
   } 
 
+  testing() {
+    console.log('works')
+  }
+  
   compare = (a,b) => {
     a = a.rank
     b = b.rank
@@ -45,7 +50,6 @@ export class HomePage {
     }
     return comparison
   } 
-
 
   allCoins() {
     let loading = this.loadingCtrl.create({
@@ -114,7 +118,7 @@ export class HomePage {
       this.index += 20
       event.complete()
     } else {
-      if (this.currentItems.length >= this.allItems.length) {
+      if (this.currentItems.length == this.allItems.length) {
         this.request.getCoinsByRank(this.all_index).subscribe(response => {
           for (var identifier in response.data) {
             var { name, symbol, id, rank } = response.data[identifier]
@@ -163,5 +167,9 @@ export class HomePage {
         this.navCtrl.setRoot(HomePage)
       })
     })
+  }
+
+  accountView() {
+    this.navCtrl.push(AccountPage)
   }
 }

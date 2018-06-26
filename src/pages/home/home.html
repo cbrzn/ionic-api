@@ -33,21 +33,14 @@
 </ion-content>
 
 <ion-footer *ngIf="username != null">
-		<ion-toolbar>
-			<ion-col col-4>
-					<button ion-button color="light">
-						Favorites
-					</button>
-			</ion-col>
-			<ion-col col-4>
-						<button ion-button color="light">
-							Home
-						</button>
-				</ion-col>
-				<ion-col col-4>
-					<button ion-button color="light">
-						Account
-					</button>
-			</ion-col>
+		<ion-toolbar text-center="" color="dark">
+				<ion-buttons>
+						<button ion-button (click)="testing()">
+								<ion-icon name="heart"></ion-icon>
+							</button>
+							<button ion-button (click)="accountView()">
+								<ion-icon name="construct"></ion-icon>
+							</button>
+					</ion-buttons>
 			</ion-toolbar>
 	</ion-footer>

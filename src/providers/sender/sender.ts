@@ -25,4 +25,8 @@ export class Sender {
     return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/${id}/`)
   }
 
+  coinDetailsConverted(id, sym): Observable<any> {
+    return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/${id}/?convert=${sym}`)
+  }
+
 }

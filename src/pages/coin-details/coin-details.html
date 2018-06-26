@@ -14,7 +14,26 @@
 
 
 <ion-content padding>
-    <h1>
-      {{coin.name}}
-    </h1>
+    <h1>{{coin.name}} {{coin.symbol}}</h1>
+    <p>Price: USD {{coin.quotes.USD.price}}</p>
+    <p *ngIf="new_coin">{{new_coin_sym}} {{new_coin.price}}</p>
+    <p>Rank: {{coin.rank}}</p>
+    <ion-col *ngIf="new_coin">Market cap: {{new_coin.market_cap}}</ion-col>
+    <ion-col *ngIf="new_coin == null">Market cap: {{coin.quotes.USD.market_cap}}</ion-col>
+    <p>Percent change: </p>
+    <ion-col col-4>1H {{coin.quotes.USD.percent_change_1h}}%</ion-col>
+    <ion-col col-4>24H {{coin.quotes.USD.percent_change_24h}}%</ion-col>
+    <ion-col col-4>7D {{coin.quotes.USD.percent_change_7d}}%</ion-col>    
+    <p></p>
+    <ion-item>
+      <ion-label>Convert to:</ion-label>
+      <ion-select [(ngModel)]="currency">
+        <ion-option *ngFor="let value of coins" [value]="value">{{value}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <button ion-button (click)="convert()" block>CONVERT</button>
+    <button ion-button (click)="newFav()"*ngIf="username != null" block>
+        <ion-icon name="heart"></ion-icon>
+        ADD TO FAVORITE
+    </button>
 </ion-content>
