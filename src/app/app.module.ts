@@ -15,6 +15,7 @@ import { Sender } from '../providers/sender/sender';
 import { HeaderMenuComponent } from '../components/header-menu/header-menu';
 import { SessionService } from '../providers/session-service/session-service';
 import { AccountPage } from '../pages/account/account';
+import { FavoritesPage } from '../pages/favorites/favorites';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AccountPage } from '../pages/account/account';
     LoginPage,
     SignupPage,
     HeaderMenuComponent,
-    AccountPage
+    AccountPage,
+    FavoritesPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { AccountPage } from '../pages/account/account';
     LoginPage,
     SignupPage,
     HeaderMenuComponent,
-    AccountPage
+    AccountPage,
+    FavoritesPage
   ],
   providers: [
     StatusBar,

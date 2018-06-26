@@ -1,11 +1,11 @@
-import { Component} from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, Content } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
-import { NativeStorage } from "@ionic-native/native-storage";
 import { CoinDetailsPage } from '../coin-details/coin-details'
 import { AlertController } from 'ionic-angular';
 import { SessionService } from '../../providers/session-service/session-service';
 import { AccountPage } from '../account/account';
+import { FavoritesPage } from '../favorites/favorites';
 
 
 @Component({
@@ -13,13 +13,13 @@ import { AccountPage } from '../account/account';
     templateUrl: 'home.html',
 })
 export class HomePage {
-  
+  @ViewChild(Content) content: Content;
+
   username:string;
   all:boolean = true
   constructor(
   	public navCtrl: NavController,
   	private request: Sender,
-    private nativeStorage: NativeStorage,
     private alertCtrl: AlertController,
     private session: SessionService,
     public loadingCtrl: LoadingController
@@ -30,11 +30,21 @@ export class HomePage {
   currentItems = []
   index: number = 20
   all_index:number = 0
-  
+  search:string
+  search_status:boolean = false
   ionViewDidLoad() {
     this.allCoins()
   } 
   
+  searchByName() {
+    this.search_status = true
+    this.currentItems = []
+    for (var i in this.allItems) {
+      this.allItems[i].name.toLowerCase().includes(this.search) ? this.currentItems.push(this.allItems[i]) : this.currentItems
+    }
+    this.search = ""
+  }
+
   compare = (a,b) => {
     a = a.rank
     b = b.rank
@@ -48,10 +58,14 @@ export class HomePage {
   } 
 
   allCoins() {
+    this.search_status = false
     let loading = this.loadingCtrl.create({
       content: 'Loading coins'
     })
     loading.present()
+    this.allItems = []
+    this.currentItems = []
+    this.index = 20
     this.request.getAllCoins().subscribe(response => {
       loading.dismiss()
       this.all = true
@@ -69,12 +83,13 @@ export class HomePage {
       });
       alert.present();
       alert.onDidDismiss(() => {
-        this.navCtrl.push(HomePage)
+        this.navCtrl.setRoot(HomePage)
       })
     })
   }
 
   byRank() {
+    this.search_status = false
     let loading = this.loadingCtrl.create({
       content: 'Loading coins'
     })
@@ -106,16 +121,28 @@ export class HomePage {
   }
 
   scrollDown(event) {
-    if (this.all == true) {
-      for (var i=this.index; i<this.index+20; i++){
-        this.currentItems.push(this.allItems[i])
-      }
-      this.index += 20
-      event.complete()
+    if (this.search_status) {
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'No more coins founded by your search',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        event.complete()
+        this.content.scrollToTop()
+      })
     } else {
-      if (this.currentItems.length == this.allItems.length) {
-        this.request.getCoinsByRank(this.all_index).subscribe(response => {
-          for (var identifier in response.data) {
+      if (this.all == true) {
+        for (var i=this.index; i<this.index+20; i++){
+          this.currentItems.push(this.allItems[i])
+        }
+        this.index += 20
+        event.complete()
+      } else {
+        if (this.currentItems.length == this.allItems.length) {
+          this.request.getCoinsByRank(this.all_index).subscribe(response => {
+            for (var identifier in response.data) {
             var { name, symbol, id, rank } = response.data[identifier]
             this.allItems.push({ name, symbol, id, rank })
           }
@@ -139,6 +166,7 @@ export class HomePage {
       }
     }
   }
+}
 
   certainCoin(id) {
     let loading = this.loadingCtrl.create({
@@ -166,6 +194,10 @@ export class HomePage {
 
   accountView() {
     this.navCtrl.push(AccountPage)
+  }
+
+  favView() {
+    this.navCtrl.push(FavoritesPage)
   }
 
   
