@@ -81,7 +81,7 @@ export class SignupPage {
       } else {
         let alert = this.alertCtrl.create({
           title: 'Error',
-          subTitle: 'Passwords doesn\'t match',
+          subTitle: `Passwords doesn't match`,
           buttons: ['Dismiss']
         })
         alert.present()

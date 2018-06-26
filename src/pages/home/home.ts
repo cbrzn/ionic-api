@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
-// import { NativeStorage } from "@ionic-native/native-storage";
+import { NativeStorage } from "@ionic-native/native-storage";
 import { CoinDetailsPage } from '../coin-details/coin-details'
 import { AlertController } from 'ionic-angular';
 import { SessionService } from '../../providers/session-service/session-service';
@@ -19,7 +19,7 @@ export class HomePage {
   constructor(
   	public navCtrl: NavController,
   	private request: Sender,
-    // private nativeStorage: NativeStorage,
+    private nativeStorage: NativeStorage,
     private alertCtrl: AlertController,
     private session: SessionService,
     public loadingCtrl: LoadingController
@@ -34,10 +34,6 @@ export class HomePage {
   ionViewDidLoad() {
     this.allCoins()
   } 
-
-  testing() {
-    console.log('works')
-  }
   
   compare = (a,b) => {
     a = a.rank
@@ -45,7 +41,7 @@ export class HomePage {
     let comparison = 0
     if (a > b) {
     comparison = 1
-    } else if ( a < b) {
+    } else if (a < b) {
         comparison = -1
     }
     return comparison
@@ -56,7 +52,6 @@ export class HomePage {
       content: 'Loading coins'
     })
     loading.present()
-    
     this.request.getAllCoins().subscribe(response => {
       loading.dismiss()
       this.all = true
@@ -172,4 +167,6 @@ export class HomePage {
   accountView() {
     this.navCtrl.push(AccountPage)
   }
+
+  
 }

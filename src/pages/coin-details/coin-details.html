@@ -18,8 +18,8 @@
     <p>Price: USD {{coin.quotes.USD.price}}</p>
     <p *ngIf="new_coin">{{new_coin_sym}} {{new_coin.price}}</p>
     <p>Rank: {{coin.rank}}</p>
-    <ion-col *ngIf="new_coin">Market cap: {{new_coin.market_cap}}</ion-col>
-    <ion-col *ngIf="new_coin == null">Market cap: {{coin.quotes.USD.market_cap}}</ion-col>
+    <ion-col *ngIf="new_coin">Market cap: {{new_coin_sym}} {{new_coin.market_cap}}</ion-col>
+    <ion-col *ngIf="new_coin == null">Market cap: USD {{coin.quotes.USD.market_cap}}</ion-col>
     <p>Percent change: </p>
     <ion-col col-4>1H {{coin.quotes.USD.percent_change_1h}}%</ion-col>
     <ion-col col-4>24H {{coin.quotes.USD.percent_change_24h}}%</ion-col>

@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { HeaderMenuComponent } from './header-menu/header-menu';
 import { IonicPageModule } from 'ionic-angular';
-import { AccountComponent } from './account/account';
 
 @NgModule({
-	declarations: [HeaderMenuComponent,
-    AccountComponent],
+	declarations: [HeaderMenuComponent],
 	imports: [
 		IonicPageModule.forChild(HeaderMenuComponent),
 	],
-	exports: [HeaderMenuComponent,
-    AccountComponent]
+	exports: [HeaderMenuComponent]
 })
 export class ComponentsModule {}
