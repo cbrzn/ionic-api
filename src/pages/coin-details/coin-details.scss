@@ -1,5 +1,18 @@
 coin-details {
     h1 {
         text-align: center;
+        color: #D4AF37
+        }
+
+        ion-content {
+            background-image: url('../../assets/imgs/background.jpg');
+            background-repeat: no-repeat;
+            color: #D4AF37;
+            
+            .transparent{
+                background-color: #ffa50000;
+                background: #ffa50000;
+            }
+    
         }
 }

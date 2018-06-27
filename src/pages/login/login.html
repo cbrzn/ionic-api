@@ -17,20 +17,20 @@
   <ion-grid> 
     <form [formGroup]='user' (ngSubmit)="logForm()">
       <ion-row>
-        <ion-col col-8 offset-2>
+        <ion-col  col-8 offset-2>
             <ion-list>
-                <ion-item>
-                  <ion-label stacked>Username</ion-label>
+                <ion-item class="transparent">
+                  <ion-label stacked color='gold'>Username</ion-label>
                   <ion-input type="text" formControlName="username"></ion-input>
                 </ion-item>
               
-                <ion-item>
-                  <ion-label stacked>Password</ion-label>
+                <ion-item class="transparent">
+                  <ion-label stacked color='gold'>Password</ion-label>
                   <ion-input type="password" formControlName="password"></ion-input>
                 </ion-item>
               
               </ion-list>
-            <button ion-button class="signin" type="submit" color='dark' round block outline>Log in</button>
+            <button ion-button type="submit" color='gold' round block outline>Log in</button>
         </ion-col>
       </ion-row>    
     </form>

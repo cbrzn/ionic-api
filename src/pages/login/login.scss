@@ -1,8 +1,19 @@
 page-login {
-    background-image: url('../../assets/imgs/background.jpg');
-}
+    ion-content {
+        background-image: url('../../assets/imgs/background.jpg');
+        background-repeat: no-repeat;
+        
+        .transparent{
+            background-color: #ffa50000;
+            background: #ffa50000;
+        }
 
-page-login > ion-content{
-    background-color: transparent;
+        ion-button:hover {
+            background: white
+        }
+    
+    }
+
+    
 }
 
