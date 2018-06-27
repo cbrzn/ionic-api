@@ -33,8 +33,11 @@ export class HomePage {
   all_index:number = 0
   search:string
   search_status:boolean = false
+
+  
   ionViewDidLoad() {
     this.allCoins()
+    
   } 
   
   searchByName() {
@@ -62,7 +65,9 @@ export class HomePage {
       // set val to the value of the searchbar
       this.currentItems = []
       this.search_status = true
+      
       const val = ev.target.value;
+      console.log(val);
       if (val == "") {
         this.allCoins()
         this.search_status = false
@@ -184,7 +189,6 @@ export class HomePage {
     }
   }
 }
-
   certainCoin(id) {
     let loading = this.loadingCtrl.create({
       content: 'Loading coin details'
@@ -193,8 +197,14 @@ export class HomePage {
     this.request.coinDetails(id).subscribe(response => {
       loading.dismiss()
       const coin = response.data
+      console.log(coin);
+      const coinprice = coin.quotes.USD.price;
+      
+
+      const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+      console.log(coinmarket);
       this.navCtrl.push(CoinDetailsPage, {
-        coin
+        coin, coinmarket, coinprice
       });
     }, err => {
       let alert = this.alertCtrl.create({

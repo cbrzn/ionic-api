@@ -31,6 +31,8 @@ export class FavoritesPage {
   ) {  }
 
  ionViewDidLoad() {
+     this.deleteFavs();
+     console.log('test');
     let loading = this.loadingCtrl.create({
       content: 'Loading favs'
     })
@@ -55,4 +57,12 @@ export class FavoritesPage {
       loading.dismiss()
     })
   }
+
+  deleteFavs() {
+    this.nativeStorage.getItem(this.session.getUser()).then(user => {
+      this.has_fav == true
+      console.log(this);
+    })
+  }
+  
 }

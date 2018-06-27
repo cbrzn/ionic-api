@@ -17,22 +17,25 @@
 <ion-content padding >
   <ion-grid>
     <ion-row>
-      <ion-col >
+      <ion-col>
+          
           <h1 color='gold'>{{coin.name}} {{coin.symbol}}</h1>
-          <p ><b>Price:</b> USD {{coin.quotes.USD.price}}</p>
-          <p *ngIf="new_coin">{{new_coin_sym}} {{new_coin.price}}</p>
+          <p><b>Price:</b> $ {{coinprice}}.</p>
+          <p *ngIf="new_coin"><b>{{coin.symbol}} to {{new_coin_sym}}</b>: {{new_coin.price}}.</p>
           <p><b>Rank:</b> {{coin.rank}}</p>
       </ion-col>
     </ion-row>
     
-    <ion-row color='gold' >
+    <ion-row color='gold'>
+
       <ion-col *ngIf="new_coin">
-          <p><b>Market cap:</b> {{new_coin_sym}} {{new_coin.market_cap}}</p>
+          <p><b>Market cap:</b> {{new_coin_sym}} {{new_coin_market}}.</p>
       </ion-col>
       
-      <ion-col *ngIf="new_coin == null">
-        <p><b>Market cap:</b> USD {{coin.quotes.USD.market_cap}}</p>
+      <ion-col color='gold' *ngIf="new_coin == null">
+        <p><b>Market cap:</b> $ {{coinmarket}}.</p>
       </ion-col>
+
     </ion-row>
     
     <ion-row>
