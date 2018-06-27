@@ -33,7 +33,7 @@ export class MyApp {
     })
 
     events.subscribe('plus:calc', () => {
-      this.goToSignup()
+      this.goToCalc()
     })
     
     platform.ready().then(() => {

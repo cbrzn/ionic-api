@@ -16,6 +16,7 @@ import { HeaderMenuComponent } from '../components/header-menu/header-menu';
 import { SessionService } from '../providers/session-service/session-service';
 import { AccountPage } from '../pages/account/account';
 import { FavoritesPage } from '../pages/favorites/favorites';
+import { CalculatorPage } from '../pages/calculator/calculator';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FavoritesPage } from '../pages/favorites/favorites';
     SignupPage,
     HeaderMenuComponent,
     AccountPage,
-    FavoritesPage
+    FavoritesPage,
+    CalculatorPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { FavoritesPage } from '../pages/favorites/favorites';
     SignupPage,
     HeaderMenuComponent,
     AccountPage,
-    FavoritesPage
+    FavoritesPage,
+    CalculatorPage
   ],
   providers: [
     StatusBar,

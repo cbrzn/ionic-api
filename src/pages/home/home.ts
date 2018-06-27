@@ -60,10 +60,10 @@ export class HomePage {
   compareValue(ev: any){
       // set val to the value of the searchbar
       this.currentItems = []
-
+      this.search_status = true
       const val = ev.target.value;
-      
       if (val == "") {
+        this.search_status = false
         this.currentItems.push(this.allItems)
       } else {
         for (var i in this.allItems) {
