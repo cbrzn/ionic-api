@@ -42,17 +42,10 @@ export class FavoritesPage {
         let coins = []
         for (var i in response) {
           coins = response
-          this.favs.push(coins[i].data)
-          
+          this.favs.push(coins[i].data) 
         }
-        console.log(JSON.stringify(this.favs))
         loading.dismiss()
       })
     })
   }
-
-  test() {
-    console.log(JSON.stringify(this.favs[0]))
-  }
-
 }

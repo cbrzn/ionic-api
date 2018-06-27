@@ -39,6 +39,7 @@ export class LoginPage {
 
   logForm() {
     const { username, password } = this.user.value
+    console.log(username, password)
     this.nativeStorage.getItem(username).then(data => {
       if (password == data.password) {
         let alert = this.alertCtrl.create({
