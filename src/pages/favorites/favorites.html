@@ -16,7 +16,7 @@
 <ion-content padding>
   <ion-list>
 		<ion-item *ngFor="let coin of favs; let in = index" >
-			{{coin.name}} {{coin.symbol}} {{coin.rank}}
+			{{coin.name}} Price: {{coin.quotes.USD.price}}
 		</ion-item>
-	</ion-list>
-	</ion-content>
+  </ion-list>
+</ion-content>

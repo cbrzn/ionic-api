@@ -34,15 +34,18 @@ export class FavoritesPage {
       content: 'Loading favs'
     })
     loading.present()
-
     this.nativeStorage.getItem(this.session.getUser()).then(user => {
       for (var i in user.fav) {
         this.obs.push(this.request.coinDetails(user.fav[i]))
       }
-      forkJoin(
-        this.obs
-      ).subscribe(response => {
-        this.favs.push(response)
+      forkJoin(this.obs).subscribe(response => {
+        let coins = []
+        for (var i in response) {
+          coins = response
+          this.favs.push(coins[i].data)
+          
+        }
+        console.log(JSON.stringify(this.favs))
         loading.dismiss()
       })
     })
