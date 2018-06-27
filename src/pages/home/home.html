@@ -26,6 +26,7 @@
 		
 		<ion-item *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
 			{{item.name}} {{item.symbol}} {{item.rank}}
+			
 		</ion-item>
 
 	</ion-list>

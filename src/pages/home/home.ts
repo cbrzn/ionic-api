@@ -33,26 +33,173 @@ export class HomePage {
   search:string
   search_status:boolean = false
   ionViewDidLoad() {
-      
-      for (let i = 0; i < response.data.length; i++) {
-        let { name, symbol, id } = response.data[i]
+    this.allCoins()
+  } 
+  
+  searchByName() {
+    this.search_status = true
+    this.currentItems = []
+    for (var i in this.allItems) {
+      this.allItems[i].name.toLowerCase().includes(this.search) ? this.currentItems.push(this.allItems[i]) : this.currentItems
+    }
+    this.search = ""
+  }
+
+  compare = (a,b) => {
+    a = a.rank
+    b = b.rank
+    let comparison = 0
+    if (a > b) {
+    comparison = 1
+    } else if (a < b) {
+        comparison = -1
+    }
+    return comparison
+  } 
+
+  allCoins() {
+    this.search_status = false
+    let loading = this.loadingCtrl.create({
+      content: 'Loading coins'
+    })
+    loading.present()
+    this.allItems = []
+    this.currentItems = []
+    this.index = 20
+    this.request.getAllCoins().subscribe(response => {
+      loading.dismiss()
+      this.all = true
+      for (var i=0; i<response.data.length; i++) {
+        var { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
+      }
+
+      this.currentItems = this.allItems.splice(0, this.index)
+    },
+     err => {
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
         buttons: ['Dismiss']
       });
       alert.present();
-    }
+      alert.onDidDismiss(() => {
+        this.navCtrl.setRoot(HomePage)
+      })
+    })
+  }
+
+  byRank() {
+    this.search_status = false
+    let loading = this.loadingCtrl.create({
+      content: 'Loading coins'
+    })
+    loading.present()
+    this.all = false
+    this.allItems = []
+    this.currentItems = []
+    this.index = 20
+    this.request.getCoinsByRank(1).subscribe(response => {
+      loading.dismiss()
+      for (var identifier in response.data) {
+        var { name, symbol, id, rank } = response.data[identifier]
+        this.allItems.push({ name, symbol, id, rank })
+      }
+      this.allItems.sort(this.compare)  
+      for (var i=0; i<this.index; i++){
+        this.currentItems.push(this.allItems[i])
+      }
+      this.all_index += 100
+    },
+    err => {
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+    })
   }
 
   scrollDown(event) {
-    for (let i = this.index; i < this.index+20; i++){
-      this.currentItems.push(this.allItems[i])
+    if (this.search_status) {
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: 'No more coins founded by your search',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        event.complete()
+        this.content.scrollToTop()
+      })
+    } else {
+      if (this.all == true) {
+        for (var i=this.index; i<this.index+20; i++){
+          this.currentItems.push(this.allItems[i])
+        }
+        this.index += 20
+        event.complete()
+      } else {
+        if (this.currentItems.length == this.allItems.length) {
+          this.request.getCoinsByRank(this.all_index).subscribe(response => {
+            for (var identifier in response.data) {
+            var { name, symbol, id, rank } = response.data[identifier]
+            this.allItems.push({ name, symbol, id, rank })
+          }
+          this.allItems.sort(this.compare)
+          for (var i=this.index; i<this.index+20; i++){
+            this.currentItems.push(this.allItems[i])
+          }
+          this.index += 20
+          this.all_index += 100
+          event.complete()
+        },
+        err => {
+          console.log(err.message)
+        })
+      } else {
+        for (var f=this.index; f<this.index+20; f++){
+          this.currentItems.push(this.allItems[f])
+        }
+        this.index += 20
+        event.complete()
+      }
     }
-
-    this.index += 20
-    event.complete()
-    console.log(this.currentItems.length)
   }
+}
+
+  certainCoin(id) {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading coin details'
+    })
+    loading.present()
+    this.request.coinDetails(id).subscribe(response => {
+      loading.dismiss()
+      const coin = response.data
+      this.navCtrl.push(CoinDetailsPage, {
+        coin
+      });
+    }, err => {
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        this.navCtrl.setRoot(HomePage)
+      })
+    })
+  }
+
+  accountView() {
+    this.navCtrl.push(AccountPage)
+  }
+
+  favView() {
+    this.navCtrl.push(FavoritesPage)
+  }
+
+  
 }

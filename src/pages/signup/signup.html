@@ -15,18 +15,22 @@
   
   <ion-content padding>
       <form [formGroup]='user' (ngSubmit)="signUp()">
-        <ion-item>
-          <ion-label>Username</ion-label>
-          <ion-input type="text" formControlName="username"></ion-input>
-        </ion-item>
-        <ion-item>
-        <ion-label>Password</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
-      </ion-item>
-      <ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label stacked>Username</ion-label>
+            <ion-input autocomplete="suggested-username" type="text" placeholder="Enter username"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input autocomplete="suggested-password" type="password" placeholder="Enter password"></ion-input>
+          </ion-item>
+          
           <ion-label>Password confirmation</ion-label>
-          <ion-input type="password" formControlName="password_confirmation"></ion-input>
-        </ion-item>
+            <ion-input autocomplete="suggested-confirmation" type="password" formControlName="password_confirmation"></ion-input>
+          </ion-item>
+        </ion-list>
+          
 
         <button ion-button type="submit" block>Sign up</button>
       </form>
