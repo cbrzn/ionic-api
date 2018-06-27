@@ -8,32 +8,64 @@
 
   <ion-navbar>
     <ion-title>Coin Details</ion-title>
+   
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding >
-    <h1>{{coin.name}} {{coin.symbol}}</h1>
-    <p>Price: USD {{coin.quotes.USD.price}}</p>
-    <p *ngIf="new_coin">{{new_coin_sym}} {{new_coin.price}}</p>
-    <p>Rank: {{coin.rank}}</p>
-    <ion-col *ngIf="new_coin">Market cap: {{new_coin_sym}} {{new_coin.market_cap}}</ion-col>
-    <ion-col *ngIf="new_coin == null">Market cap: USD {{coin.quotes.USD.market_cap}}</ion-col>
-    <p>Percent change: </p>
-    <ion-col col-4>1H {{coin.quotes.USD.percent_change_1h}}%</ion-col>
-    <ion-col col-4>24H {{coin.quotes.USD.percent_change_24h}}%</ion-col>
-    <ion-col col-4>7D {{coin.quotes.USD.percent_change_7d}}%</ion-col>    
-    <p></p>
-    <ion-item>
-      <ion-label>Convert to:</ion-label>
-      <ion-select [(ngModel)]="currency">
-        <ion-option *ngFor="let value of coins" [value]="value">{{value}}</ion-option>
-      </ion-select>
-    </ion-item>
-    <button ion-button (click)="convert()" block>CONVERT</button>
-    <button ion-button (click)="newFav()"*ngIf="username != null" block>
+  <ion-grid>
+    <ion-row>
+      <ion-col >
+          <h1 color='gold'>{{coin.name}} {{coin.symbol}}</h1>
+          <p ><b>Price:</b> USD {{coin.quotes.USD.price}}</p>
+          <p *ngIf="new_coin">{{new_coin_sym}} {{new_coin.price}}</p>
+          <p><b>Rank:</b> {{coin.rank}}</p>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row color='gold' >
+      <ion-col *ngIf="new_coin">
+          <p><b>Market cap:</b> {{new_coin_sym}} {{new_coin.market_cap}}</p>
+      </ion-col>
+      
+      <ion-col *ngIf="new_coin == null">
+        <p><b>Market cap:</b> USD {{coin.quotes.USD.market_cap}}</p>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+          <p><b>Percent change:</b> </p>
+      </ion-col>
+  
+      <ion-col col-3>
+        <p>1H <br/>{{coin.quotes.USD.percent_change_1h}}%</p>
+      </ion-col>
+
+      <ion-col col-3>
+          <p>24H {{coin.quotes.USD.percent_change_24h}}%</p>
+      </ion-col>
+      
+      <ion-col col-3>
+          <p>7D {{coin.quotes.USD.percent_change_7d}}%</p>
+      </ion-col> 
+    </ion-row>
+
+    <ion-item >
+        <ion-label>Convert to:</ion-label>
+        <ion-select [(ngModel)]="currency">
+          <ion-option *ngFor="let value of coins" [value]="value">{{value}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    <button color='gold' ion-button (click)="convert()" round block outline>CONVERT</button>
+    <button  color='gold' ion-button (click)="newFav()"*ngIf="username != null" round block outline>
         <ion-icon name="heart"></ion-icon>
         ADD TO FAVORITE
     </button>
+    
+  </ion-grid>
+
 </ion-content>
