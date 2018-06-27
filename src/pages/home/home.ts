@@ -33,8 +33,11 @@ export class HomePage {
   all_index:number = 0
   search:string
   search_status:boolean = false
+
+  
   ionViewDidLoad() {
     this.allCoins()
+    
   } 
   
   searchByName() {
@@ -62,13 +65,15 @@ export class HomePage {
       // set val to the value of the searchbar
       this.currentItems = []
       this.search_status = true
+      
       const val = ev.target.value;
+      console.log(val);
       if (val == "") {
         this.search_status = false
         this.currentItems.push(this.allItems)
       } else {
         for (var i in this.allItems) {
-          this.allItems[i].name.toLowerCase().includes(val) ? this.currentItems.push(this.allItems[i]) : this.currentItems
+          this.allItems[i].name.includes(val) ? this.currentItems.push(this.allItems[i]) : this.allItems[i]
         }
       }
   }
