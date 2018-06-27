@@ -8,6 +8,7 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 
 import { SessionService } from '../providers/session-service/session-service';
+import { CalculatorPage } from '../pages/calculator/calculator';
 
 @Component({
   templateUrl: 'app.html',
@@ -30,6 +31,10 @@ export class MyApp {
     events.subscribe('user:signup', () => {
       this.goToSignup()
     })
+
+    events.subscribe('plus:calc', () => {
+      this.goToSignup()
+    })
     
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -45,6 +50,10 @@ export class MyApp {
 
   goToSignup() {
     this.navigate.push(SignupPage)
+  }
+
+  goToCalc() {
+    this.navigate.push(CalculatorPage)
   }
 }
 
