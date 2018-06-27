@@ -57,6 +57,26 @@ export class HomePage {
     return comparison
   } 
 
+  compareValue(ev: any){
+      // set val to the value of the searchbar
+      let current = this.getCurrentItems()
+
+      const val = ev.target.value;
+      console.log(val);
+
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != '') {
+        this.currentItems = current.filter((item) => {
+          console.log(item);
+          return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
+  }
+
+  getCurrentItems(){
+    return this.currentItems;
+  }
+
   allCoins() {
     this.search_status = false
     let loading = this.loadingCtrl.create({

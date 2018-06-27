@@ -7,26 +7,32 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Log in</ion-title>
+    <ion-title style="text-align: center">Log in</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-grid> 
     <form [formGroup]='user' (ngSubmit)="logForm()">
-        <ion-list>
-          <ion-item>
-            <ion-label stacked>Username</ion-label>
-            <ion-input type="text" placeholder="Enter username"></ion-input>
-          </ion-item>
-        
-          <ion-item>
-            <ion-label stacked>Password</ion-label>
-            <ion-input type="password" placeholder="Enter password"></ion-input>
-          </ion-item>
-        
-        </ion-list>
-      <button ion-button type="submit" block>Log in</button>
-      </form>
+      <ion-row>
+        <ion-col col-8 offset-2>
+            <ion-list>
+                <ion-item>
+                  <ion-label stacked>Username</ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+              
+                <ion-item>
+                  <ion-label stacked>Password</ion-label>
+                  <ion-input type="password"></ion-input>
+                </ion-item>
+              
+              </ion-list>
+            <button ion-button class="signin" type="submit" color='dark' round block outline>Log in</button>
+        </ion-col>
+      </ion-row>    
+    </form>
+  </ion-grid>
 </ion-content>

@@ -18,21 +18,23 @@
         <ion-list>
           <ion-item>
             <ion-label stacked>Username</ion-label>
-            <ion-input autocomplete="suggested-username" type="text" placeholder="Enter username"></ion-input>
+            <ion-input type="text"></ion-input>
           </ion-item>
         
           <ion-item>
             <ion-label stacked>Password</ion-label>
-            <ion-input autocomplete="suggested-password" type="password" placeholder="Enter password"></ion-input>
+            <ion-input type="password"></ion-input>
           </ion-item>
           
-          <ion-label>Password confirmation</ion-label>
-            <ion-input autocomplete="suggested-confirmation" type="password" formControlName="password_confirmation"></ion-input>
+          <ion-item>
+            <ion-label stacked>Password Confirmation</ion-label>
+            <ion-input type="password" formControlName="password_confirmation"></ion-input>
           </ion-item>
-        </ion-list>
+         
+          </ion-list>
           
 
-        <button ion-button type="submit" block>Sign up</button>
+        <button ion-button type="submit" color='dark' block>Sign up</button>
       </form>
   </ion-content>
   
