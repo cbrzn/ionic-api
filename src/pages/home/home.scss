@@ -8,4 +8,15 @@ page-home {
    h1 {
     text-align: center;
     }
+
+    ion-content {
+        background-image: url('../../assets/imgs/background.jpg');
+        background-repeat: no-repeat;
+        
+        .transparent{
+            background-color: #ffa50000;
+            background: #ffa50000;
+        }
+
+    }
 }
