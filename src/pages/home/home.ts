@@ -199,6 +199,5 @@ export class HomePage {
   favView() {
     this.navCtrl.push(FavoritesPage)
   }
-
   
 }

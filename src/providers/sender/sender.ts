@@ -28,5 +28,5 @@ export class Sender {
   coinDetailsConverted(id, sym): Observable<any> {
     return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/${id}/?convert=${sym}`)
   }
-
+  
 }

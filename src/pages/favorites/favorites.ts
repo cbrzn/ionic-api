@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { NativeStorage } from "@ionic-native/native-storage";
 import { SessionService } from '../../providers/session-service/session-service';
 import { Sender } from "../../providers/sender/sender";
-import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 /**
  * Generated class for the FavoritesPage page.
@@ -19,6 +19,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class FavoritesPage {
   favs = []
+  obs = []
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,19 +34,17 @@ export class FavoritesPage {
       content: 'Loading favs'
     })
     loading.present()
-    this.nativeStorage.getItem(this.session.getUser()).then(async data => {
-      Observable.forkJoin([
 
-      ])
-      for (var i in data.fav) {
-       this.request.coinDetails(data.fav[i]).subscribe(response => {
-           this.favs.push(response.data)
-           console.log('a')
-        })
+    this.nativeStorage.getItem(this.session.getUser()).then(user => {
+      for (var i in user.fav) {
+        this.obs.push(this.request.coinDetails(user.fav[i]))
       }
-      loading.dismiss()
-      await console.log('done')
-      await console.log(JSON.stringify(this.favs))
+      forkJoin(
+        this.obs
+      ).subscribe(response => {
+        this.favs.push(response)
+        loading.dismiss()
+      })
     })
   }
 
