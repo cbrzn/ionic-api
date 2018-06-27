@@ -68,7 +68,7 @@ export class HomePage {
       
       const val = ev.target.value;
       console.log(val);
-      if (val == "") {
+      if (val == null) {
         this.allCoins()
         this.search_status = false
       } else {

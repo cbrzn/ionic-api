@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { NativeStorage } from "@ionic-native/native-storage";
 import { SessionService } from '../../providers/session-service/session-service';
 import { Sender } from "../../providers/sender/sender";
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the FavoritesPage page.
@@ -28,11 +29,10 @@ export class FavoritesPage {
     private nativeStorage: NativeStorage,
     private session: SessionService,
     public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController,
   ) {  }
 
  ionViewDidLoad() {
-     this.deleteFavs();
-     console.log('test');
     let loading = this.loadingCtrl.create({
       content: 'Loading favs'
     })
@@ -58,11 +58,31 @@ export class FavoritesPage {
     })
   }
 
-  deleteFavs() {
+  deleteFavs(fav) {
     this.nativeStorage.getItem(this.session.getUser()).then(user => {
-      this.has_fav == true
-      console.log(this);
+      let favorites = user.fav
+      const password = user.password
+      const name = fav.name
+      var index = favorites.indexOf(fav.id)
+      if (index > -1) {
+        favorites.splice(index, 1)
+      }
+      this.nativeStorage.remove('fav').then(data => {
+        this.nativeStorage.setItem(this.session.getUser(), {
+          password,
+          fav: favorites
+        }).then(data => {
+          let alert = this.alertCtrl.create({
+            title: 'Fav deleted',
+            subTitle: `You have deleted ${name} from your favorites!` ,
+            buttons: ['Dismiss']
+          });
+          alert.present();
+          alert.onDidDismiss(() => {
+            this.navCtrl.setRoot(HomePage)
+          })
+        })
+      })
     })
   }
-  
 }

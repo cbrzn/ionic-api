@@ -20,8 +20,8 @@
       <ion-col>
           
           <h1 color='gold'>{{coin.name}} {{coin.symbol}}</h1>
-          <p><b>Price:</b> $ {{coinprice}}.</p>
-          <p *ngIf="new_coin"><b>{{coin.symbol}} to {{new_coin_sym}}</b>: {{new_coin.price}}.</p>
+          <p><b>Price:</b> $ {{coinprice}}</p>
+          <p *ngIf="new_coin"><b>{{coin.symbol}} to {{new_coin_sym}}</b>: {{new_coin.price}}</p>
           <p><b>Rank:</b> {{coin.rank}}</p>
       </ion-col>
     </ion-row>
@@ -29,29 +29,27 @@
     <ion-row color='gold'>
 
       <ion-col *ngIf="new_coin">
-          <p><b>Market cap:</b> {{new_coin_sym}} {{new_coin_market}}.</p>
+          <p><b>Market cap:</b> {{new_coin_sym}} {{new_coin_market}}</p>
       </ion-col>
       
       <ion-col color='gold' *ngIf="new_coin == null">
-        <p><b>Market cap:</b> $ {{coinmarket}}.</p>
+        <p><b>Market cap:</b> $ {{coinmarket}}</p>
       </ion-col>
 
     </ion-row>
     
+        <p>Percent change:</p>
     <ion-row>
-      <ion-col>
-          <p><b>Percent change:</b> </p>
-      </ion-col>
   
-      <ion-col col-3>
-        <p>1H <br/>{{coin.quotes.USD.percent_change_1h}}%</p>
+      <ion-col col-4>
+        <p>1H {{coin.quotes.USD.percent_change_1h}}%</p>
       </ion-col>
 
-      <ion-col col-3>
+      <ion-col col-4>
           <p>24H {{coin.quotes.USD.percent_change_24h}}%</p>
       </ion-col>
       
-      <ion-col col-3>
+      <ion-col col-4>
           <p>7D {{coin.quotes.USD.percent_change_7d}}%</p>
       </ion-col> 
     </ion-row>
