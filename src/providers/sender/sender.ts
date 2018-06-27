@@ -10,16 +10,23 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class Sender {
   
-  constructor(public http: HttpClient) {
-    console.log('Hello Sender Provider');
+  constructor(public http: HttpClient) { }
+
+  getAllCoins(): Observable<any> {
+    return this.http.get<any>('https://api.coinmarketcap.com/v2/listings/')
   }
 
-  getCoins(): Observable<any> {
-    return this.http.get<any>('https://api.coinmarketcap.com/v2/listings/')
+
+  getCoinsByRank(index): Observable<any> {
+    return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/?start=${index}`)
   }
 
   coinDetails(id): Observable<any> {
     return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/${id}/`)
+  }
+
+  coinDetailsConverted(id, sym): Observable<any> {
+    return this.http.get<any>(`https://api.coinmarketcap.com/v2/ticker/${id}/?convert=${sym}`)
   }
 
 }

@@ -1,42 +1,52 @@
-import { Component} from '@angular/core';
-import { NavController} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, Content } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
-import { NativeStorage } from "@ionic-native/native-storage";
+import { CoinDetailsPage } from '../coin-details/coin-details'
+import { AlertController } from 'ionic-angular';
+import { SessionService } from '../../providers/session-service/session-service';
+import { AccountPage } from '../account/account';
+import { FavoritesPage } from '../favorites/favorites';
+
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
 })
 export class HomePage {
+  @ViewChild(Content) content: Content;
 
+  username:string;
+  all:boolean = true
   constructor(
   	public navCtrl: NavController,
   	private request: Sender,
-  	private nativeStorage: NativeStorage) {
-  }
-  
+    private alertCtrl: AlertController,
+    private session: SessionService,
+    public loadingCtrl: LoadingController
+  ) {
+    this.username = this.session.getUser()
+  }  
   allItems = []
   currentItems = []
   index: number = 20
-  
+  all_index:number = 0
+  search:string
+  search_status:boolean = false
   ionViewDidLoad() {
-    this.request.getCoins().subscribe(response => {
       
       for (let i = 0; i < response.data.length; i++) {
         let { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
-      }
-
-      this.currentItems = this.allItems.splice(0, this.index)
-      console.log(JSON.stringify(this.currentItems))
-    },
-     err => {
-       console.error(err.message)
-     })
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+    }
   }
 
   scrollDown(event) {
-
     for (let i = this.index; i < this.index+20; i++){
       this.currentItems.push(this.allItems[i])
     }
@@ -45,30 +55,4 @@ export class HomePage {
     event.complete()
     console.log(this.currentItems.length)
   }
-
-  certainCoin(id) {
-    this.request.coinDetails(id).subscribe(response => {
-      console.log(JSON.stringify(response))
-    })
-  }
-
-    set() {
-        this.nativeStorage
-            .setItem("myitem", {
-                test: 'test'
-            })
-            .then(() => {
-                    console.log("Stored item!");
-                },
-                error => console.error("Error storing item", error));
-    }
-
-    get() {
-        this.nativeStorage
-            .getItem("myitem")
-            .then(data => {
-                console.log(data);
-                alert(JSON.stringify(data))
-            }, error => console.error(error));
-    }
 }
