@@ -6,6 +6,7 @@ import { AlertController } from 'ionic-angular';
 import { SessionService } from '../../providers/session-service/session-service';
 import { AccountPage } from '../account/account';
 import { FavoritesPage } from '../favorites/favorites';
+import { CalculatorPage } from '../calculator/calculator';
 
 
 @Component({
@@ -60,10 +61,10 @@ export class HomePage {
   compareValue(ev: any){
       // set val to the value of the searchbar
       this.currentItems = []
-
+      this.search_status = true
       const val = ev.target.value;
-      
       if (val == "") {
+        this.search_status = false
         this.currentItems.push(this.allItems)
       } else {
         for (var i in this.allItems) {
@@ -89,7 +90,6 @@ export class HomePage {
         var { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
       }
-
       this.currentItems = this.allItems.splice(0, this.index)
     },
      err => {
@@ -220,6 +220,10 @@ export class HomePage {
 
   favView() {
     this.navCtrl.push(FavoritesPage)
+  }
+
+  calcView() {
+    this.navCtrl.push(CalculatorPage)
   }
   
 }

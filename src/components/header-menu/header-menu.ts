@@ -20,19 +20,18 @@ export class HeaderMenuComponent {
     private session: SessionService
   ) { 
     this.username = this.session.getUser()
-    // console.log(this.username)
-    // console.log('here')
    }
 
-  ionViewDidLoad() {
-    console.log('asdasd')
-  }
   goToLogin() {
-    this.events.publish('user:login');
-   }
+    this.events.publish('user:login')
+  }
   
   goToSignup() {
-    this.events.publish('user:signup');
+    this.events.publish('user:signup')
+  }
+    
+  goToCalc() {
+    this.events.publish('plus:calc')
   }
     
 }

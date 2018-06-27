@@ -14,9 +14,11 @@
 
 
 <ion-content padding>
-  <ion-list class="transparent">
+  <ion-list *ngIf="has_fav != null"class="transparent">
 		<ion-item class="transparent" color='gold' *ngFor="let coin of favs; let in = index" >
 			{{coin.name}} Price: {{coin.quotes.USD.price}}
 		</ion-item>
   </ion-list>
+
+  <h1 *ngIf="has_fav == null"> You aint got favorites yet!</h1>
 </ion-content>

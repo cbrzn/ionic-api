@@ -20,6 +20,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 export class FavoritesPage {
   favs = []
   obs = []
+  has_fav:any
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,17 +36,23 @@ export class FavoritesPage {
     })
     loading.present()
     this.nativeStorage.getItem(this.session.getUser()).then(user => {
-      for (var i in user.fav) {
-        this.obs.push(this.request.coinDetails(user.fav[i]))
-      }
-      forkJoin(this.obs).subscribe(response => {
-        let coins = []
-        for (var i in response) {
-          coins = response
-          this.favs.push(coins[i].data) 
+      if (user.fav == null) {
+        this.has_fav = null
+        this.favs.push({name:"Add new favorite coins"})
+      } else {
+        this.has_fav = ''
+        for (var i in user.fav) {
+          this.obs.push(this.request.coinDetails(user.fav[i]))
         }
-        loading.dismiss()
-      })
+        forkJoin(this.obs).subscribe(response => {
+          let coins = []
+          for (var i in response) {
+            coins = response
+            this.favs.push(coins[i].data) 
+          }
+        })
+      }
+      loading.dismiss()
     })
   }
 }
