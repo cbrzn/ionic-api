@@ -15,14 +15,14 @@
 
 <ion-content padding>
 <h1> Price calculator</h1>
-<ion-item> 
+<ion-item class="transparent"> 
     <ion-input type="number" [(ngModel)]="crypto_value" (ionChange)='calculateByCrypto()' placeholder={{crypto_value}}></ion-input>
       <ion-select [(ngModel)]="crypto" (ionChange)="newCrypto()">
         <ion-option *ngFor="let value of crypto_coins" [value]="value">{{value}}</ion-option>
       </ion-select>
     </ion-item>
     
-    <ion-item >
+    <ion-item class="transparent">
         <ion-input type="number" [(ngModel)]="fiat_value" (ionChange)='calculateByFiat()' placeholder={{fiat_value}}></ion-input>
       <ion-select [(ngModel)]="fiat" (ionChange)="newFiat()">
         <ion-option *ngFor="let value of all_coins" [value]="value">{{value}}</ion-option>
