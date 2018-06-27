@@ -21,10 +21,12 @@ export class HomePage {
   
   ionViewDidLoad() {
     this.request.getCoins().subscribe(response => {
+      
       for (let i = 0; i < response.data.length; i++) {
-        var { name, symbol, id } = response.data[i]
+        let { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
       }
+
       this.currentItems = this.allItems.splice(0, this.index)
       console.log(JSON.stringify(this.currentItems))
     },
@@ -34,9 +36,11 @@ export class HomePage {
   }
 
   scrollDown(event) {
-    for (var i=this.index; i<this.index+20; i++){
+
+    for (let i = this.index; i < this.index+20; i++){
       this.currentItems.push(this.allItems[i])
     }
+
     this.index += 20
     event.complete()
     console.log(this.currentItems.length)

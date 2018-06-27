@@ -14,9 +14,11 @@
 	</div>
 
 	<ion-list>
+		
 		<ion-item *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
 			{{item.name}} {{item.symbol}}
 		</ion-item>
+
 	</ion-list>
 	<ion-infinite-scroll (ionInfinite)="scrollDown($event)">
 		<ion-infinite-scroll-content> loadingSpinner="bubbles" </ion-infinite-scroll-content>
