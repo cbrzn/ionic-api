@@ -25,17 +25,15 @@
 								{{item.name}} {{item.symbol}} {{item.rank}}
 					</ion-item>
 				</ion-list>
-
-
 				<button ion-button *ngIf="all" (click)='byRank()' ion-button type="submit" color='gold' round block outline end>SHOW BY RANK</button>
 				<button ion-button *ngIf="all == false" (click)='allCoins()' color='dark' color='gold' round block outline end>SHOW ALL COINS</button>
+				
 				<ion-list>
+					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
+						{{item.name}} {{item.symbol}} {{item.rank}}
+					</ion-item>
 		
-				<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
-					{{item.name}} {{item.symbol}} {{item.rank}}
-				</ion-item>
-		
-			</ion-list>
+				</ion-list>
 			<ion-infinite-scroll (ionInfinite)="scrollDown($event)">
 				<ion-infinite-scroll-content> loadingSpinner="bubbles" </ion-infinite-scroll-content>
 			</ion-infinite-scroll>

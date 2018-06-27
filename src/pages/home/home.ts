@@ -64,11 +64,11 @@ export class HomePage {
       this.search_status = true
       const val = ev.target.value;
       if (val == "") {
+        this.allCoins()
         this.search_status = false
-        this.currentItems.push(this.allItems)
       } else {
         for (var i in this.allItems) {
-          this.allItems[i].name.toLowerCase().includes(val) ? this.currentItems.push(this.allItems[i]) : this.currentItems
+          this.allItems[i].name.toLowerCase().includes(val.toLowerCase()) ? this.currentItems.push(this.allItems[i]) : this.currentItems
         }
       }
   }
