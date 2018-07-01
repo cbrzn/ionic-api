@@ -12,6 +12,10 @@
 	  </ion-header>
 
 <ion-content class="list" padding>
+
+<div id="logo" padding text-center>
+  <img src="./assets/imgs/logo.png">
+</div>
 	<div *ngIf="all">
 			<h1 color='gold'> ALL COINS</h1>
 	</div>
@@ -25,6 +29,7 @@
 								{{item.name}} {{item.symbol}} {{item.rank}}
 					</ion-item>
 				</ion-list>
+				
 				<button ion-button *ngIf="all" (click)='byRank()' ion-button type="submit" color='gold' round block outline end>SHOW BY RANK</button>
 				<button ion-button *ngIf="all == false" (click)='allCoins()' color='dark' color='gold' round block outline end>SHOW ALL COINS</button>
 				

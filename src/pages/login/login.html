@@ -7,32 +7,98 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Log in</ion-title>
+    <ion-title>Account</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
+
 <ion-content padding>
-  <ion-grid> 
-    <form [formGroup]='user' (ngSubmit)="logForm()">
-      <ion-row>
-        <ion-col  col-8 offset-2>
+
+  <div id="logo" padding text-center>
+    <img src="./assets/imgs/logo.png">
+  </div>
+
+
+  <div padding>
+    <ion-segment [(ngModel)]="opt" color="gold">
+      <ion-segment-button value="login">
+        Sign In
+      </ion-segment-button>
+      <ion-segment-button value="signup">
+        Sign Up
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  
+  <ion-grid>  
+    <div [ngSwitch]="opt">
+      <form [formGroup]='user' (ngSubmit)="logForm()" *ngSwitchCase="'login'">
+        <ion-row>
+          <ion-col>
+              <ion-list>
+                  <ion-item class="transparent">
+                    <ion-label stacked color='gold' icon-left>
+                      <ion-icon name='contact'></ion-icon>
+                    Username</ion-label>
+                      <ion-input type="text" formControlName="log_username" >
+                        
+                      </ion-input>
+                  </ion-item>
+                
+                  <ion-item class="transparent">
+                    <ion-label stacked color='gold' icon-left>
+                      <ion-icon name='key'></ion-icon>
+                    Password</ion-label>
+                    <ion-input type="password" formControlName="log_password"></ion-input>
+                  </ion-item>
+                
+                </ion-list>
+              <button ion-button type="submit" color='gold' icon-right round block outline>Log in
+                <ion-icon name="log-in"></ion-icon> 
+              </button>
+          </ion-col>
+        </ion-row>    
+      </form>
+    </div>
+    
+    <div [ngSwitch]="opt">
+      <form [formGroup]='user' *ngSwitchCase="'signup'" (ngSubmit)="signUp()">
+        <ion-row>
+          <ion-col>
             <ion-list>
-                <ion-item class="transparent">
-                  <ion-label stacked color='gold'>Username</ion-label>
-                  <ion-input type="text" formControlName="username"></ion-input>
-                </ion-item>
-              
-                <ion-item class="transparent">
-                  <ion-label stacked color='gold'>Password</ion-label>
-                  <ion-input type="password" formControlName="password"></ion-input>
-                </ion-item>
-              
-              </ion-list>
-            <button ion-button type="submit" color='gold' round block outline>Log in</button>
-        </ion-col>
-      </ion-row>    
-    </form>
+              <ion-item class="transparent">
+                <ion-label stacked color='gold' icon-left>
+                  <ion-icon name='contact'></ion-icon>
+                Username</ion-label>
+                  
+                <ion-input type="text" formControlName="sign_username"></ion-input>
+              </ion-item>
+
+              <ion-item class="transparent">
+                <ion-label stacked color='gold' icon-left>
+                  <ion-icon name='key'></ion-icon>
+                Password</ion-label>
+                <ion-input type="password" formControlName="sign_password"></ion-input>
+              </ion-item>
+
+              <ion-item class="transparent">
+                <ion-label stacked color='gold' icon-left>
+                  <ion-icon name='key'></ion-icon>
+                Password Confirmation</ion-label>
+                <ion-input type="password" color='gold' formControlName="sign_password_confirmation"></ion-input>
+              </ion-item>
+
+            </ion-list>
+              <button ion-button type="submit" color='gold' icon-right round block outline>Sign up
+                <ion-icon name="log-in"></ion-icon>
+              </button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </div>
+
+
   </ion-grid>
 </ion-content>
