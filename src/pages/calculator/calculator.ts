@@ -40,6 +40,7 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(1, "USD").subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
+      this.fiat_actual_price = response.data.quotes.USD.price
       this.fiat_value = response.data.quotes.USD.price
     }, err => {
 
@@ -68,13 +69,13 @@ export class CalculatorPage {
   }
 
   calculateByCrypto() {
-    this.fiat_value = this.crypto_value * this.fiat_actual_price
+    (this.fiat_value = this.crypto_value * this.fiat_actual_price).toFixed(2)
   }
 
 
   calculateByFiat() {
-      this.crypto_value = this.fiat_value / this.fiat_actual_price
-  }
+    (this.crypto_value = this.fiat_value / this.fiat_actual_price).toFixed(2)
+}
   
   newFiat() {
     let loading = this.loadingCtrl.create({
