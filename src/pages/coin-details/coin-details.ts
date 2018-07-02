@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
 import { SessionService } from '../../providers/session-service/session-service';
 import { AlertController } from 'ionic-angular';
@@ -37,13 +37,9 @@ export class CoinDetailsPage {
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     private nativeStorage: NativeStorage,
+    public viewCtrl: ViewController,
   ) {    
     this.username = this.session.getUser()
-  }
-
-  IonViewOnLoad() {
-    console.log('oload');
-    console.log(this.params.get('coin'));
   }
 
   convert() {
@@ -54,7 +50,6 @@ export class CoinDetailsPage {
     this.request.coinDetailsConverted(this.coin.id, this.currency).subscribe(response => {
       loading.dismiss()
       this.new_coin_market = response.data.quotes[this.currency].market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-      console.log(this.new_coin_market);
       this.new_coin = response.data.quotes[this.currency]
       this.new_coin_sym = this.currency
     }, err => {
@@ -110,6 +105,8 @@ export class CoinDetailsPage {
     })
   }
 
-
+  cancel(){
+    this.viewCtrl.dismiss();
+  }
 
 }

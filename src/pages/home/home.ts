@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, LoadingController, Content } from 'ionic-angular';
+import { NavController, LoadingController, Content, ModalController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
 import { CoinDetailsPage } from '../coin-details/coin-details'
 import { AlertController } from 'ionic-angular';
@@ -20,10 +20,11 @@ export class HomePage {
   all:boolean = true
   constructor(
   	public navCtrl: NavController,
-  	private request: Sender,
-    private alertCtrl: AlertController,
-    private session: SessionService,
-    public loadingCtrl: LoadingController
+  	public request: Sender,
+    public alertCtrl: AlertController,
+    public session: SessionService,
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController
   ) {
     this.username = this.session.getUser()
   }  
@@ -39,15 +40,6 @@ export class HomePage {
     this.allCoins()
     
   } 
-  
-  searchByName() {
-    this.search_status = true
-    this.currentItems = []
-    for (var i in this.allItems) {
-      this.allItems[i].name.toLowerCase().includes(this.search) ? this.currentItems.push(this.allItems[i]) : this.currentItems
-    }
-    this.search = ""
-  }
 
   compare = (a,b) => {
     a = a.rank
@@ -95,9 +87,12 @@ export class HomePage {
         var { name, symbol, id } = response.data[i]
         this.allItems.push({ name, symbol, id })
       }
-      this.currentItems = this.allItems.splice(0, this.index)
+      for (var k=0; k<20; k++) {
+        this.currentItems.push(this.allItems[k])
+      }
     },
      err => {
+      loading.dismiss()
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
@@ -133,12 +128,16 @@ export class HomePage {
       this.all_index += 100
     },
     err => {
+      loading.dismiss()
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
         buttons: ['Dismiss']
       });
       alert.present();
+      alert.onDidDismiss(() => {
+        this.navCtrl.setRoot(HomePage)
+      })
     })
   }
 
@@ -206,6 +205,34 @@ export class HomePage {
       this.navCtrl.push(CoinDetailsPage, {
         coin, coinmarket, coinprice
       });
+    }, err => {
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection',
+        buttons: ['Dismiss']
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        this.navCtrl.setRoot(HomePage)
+      })
+    })
+  }
+
+  coinModal(id) {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading coin details'
+    })
+    loading.present()
+    this.request.coinDetails(id).subscribe(response => {
+      loading.dismiss()
+      const coin = response.data
+      console.log(coin);
+      const coinprice = coin.quotes.USD.price;
+      const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+      let modal = this.modalCtrl.create(CoinDetailsPage, {
+        coin, coinmarket, coinprice
+      });
+      modal.present();
     }, err => {
       let alert = this.alertCtrl.create({
         title: 'Conection error',

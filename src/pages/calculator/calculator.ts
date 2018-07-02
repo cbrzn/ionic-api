@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
 
 /**
@@ -24,14 +24,22 @@ export class CalculatorPage {
   fiat:string = this.all_coins[0]
   constructor(
     public navCtrl: NavController, 
+    private loadingCtrl: LoadingController,
     public navParams: NavParams,
     private sender: Sender) {
   }
 
   ionViewDidLoad() {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading info'
+    })
+    loading.present()
     this.sender.coinDetailsConverted(1, "USD").subscribe(response => {
+      loading.dismiss()
       this.crypto_value = 1
       this.fiat_value = response.data.quotes.USD.price
+    }, err => {
+
     })
   }
 
@@ -57,8 +65,13 @@ export class CalculatorPage {
   }
 
   calculateByCrypto() {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading info'
+    })
+    loading.present()
     this.checkId()
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
+      loading.dismiss()
       this.fiat_value = this.crypto_value * response.data.quotes[this.fiat].price
     }, error => {
       console.log(JSON.stringify(error))
@@ -67,8 +80,13 @@ export class CalculatorPage {
 
 
   calculateByFiat() {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading info'
+    })
+    loading.present()
     this.checkId()
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
+      loading.dismiss()
         this.crypto_value = this.fiat_value / response.data.quotes[this.fiat].price
       }, error => {
         console.log(JSON.stringify(error))
@@ -76,8 +94,13 @@ export class CalculatorPage {
    }
 
   newFiat() {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading info'
+    })
+    loading.present()
     this.checkId()
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
+      loading.dismiss()
       this.crypto_value = 1
       this.fiat_value = response.data.quotes[this.fiat].price
     }, error => {
@@ -86,12 +109,26 @@ export class CalculatorPage {
   }
 
   newCrypto() {
+    let loading = this.loadingCtrl.create({
+      content: 'Loading info'
+    })
+    loading.present()
     this.checkId()
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
+      loading.dismiss()
       this.crypto_value = 1
       this.fiat_value = response.data.quotes[this.fiat].price
-    }, error => {
-      console.log(error)
+    // }, error => {
+    //   loading.dismiss()
+    //   let alert = this.alertCtrl.create({
+    //     title: 'Conection error',
+    //     subTitle: 'Please check your internet conection',
+    //     buttons: ['Dismiss']
+    //   });
+    //   alert.present();
+    //   alert.onDidDismiss(() => {
+    //     this.navCtrl.setRoot(HomePage)
+    //   })
     })
   }
 }
