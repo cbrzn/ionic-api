@@ -26,7 +26,10 @@
 				<ion-searchbar  (ionInput)="compareValue($event)"></ion-searchbar>
 					<ion-list class="transparent">
 						<ion-item *ngFor="let item of items">
-								{{item.name}} {{item.symbol}} {{item.rank}}
+								{{item.name}}
+								<ion-note item-end>
+									{{item.symbol}} {{item.rank}}
+								</ion-note>
 					</ion-item>
 				</ion-list>
 				
@@ -35,7 +38,10 @@
 				
 				<ion-list>
 					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
-						{{item.name}} {{item.symbol}} {{item.rank}}
+							{{item.name}}
+								<ion-note item-end>
+ 									{{item.symbol}} {{item.rank}}
+								</ion-note>
 					</ion-item>
 		
 				</ion-list>

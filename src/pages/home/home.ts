@@ -201,7 +201,7 @@ export class HomePage {
       const coinprice = coin.quotes.USD.price;
       
 
-      const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+      const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d  \d)+(?!\d))/g, "$1.");
       console.log(coinmarket);
       this.navCtrl.push(CoinDetailsPage, {
         coin, coinmarket, coinprice
@@ -213,9 +213,11 @@ export class HomePage {
         buttons: ['Dismiss']
       });
       alert.present();
+      
       alert.onDidDismiss(() => {
         this.navCtrl.setRoot(HomePage)
       })
+
     })
   }
 

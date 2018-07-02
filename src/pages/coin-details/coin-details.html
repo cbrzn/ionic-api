@@ -17,25 +17,35 @@
 <ion-content padding >
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col color='gold' offset-3>
           
           <h1>{{coin.name}} </h1>
           <h1>{{coin.symbol}}</h1>
-          
-          <p>Price: $ {{coinprice}}</p>
-          <p>Rank: {{coin.rank}}</p>
-          <p *ngIf="new_coin">{{coin.symbol}} to {{new_coin_sym}}: {{new_coin.price}}</p>
-      </ion-col>
-    </ion-row>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <p float-left>Price:</p>
+          <p float-right> $ {{coinprice}}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <p float-left>Rank: </p>
+          <p float-right>{{coin.rank}}</p>
+        </ion-col>
+      </ion-row>
     
     <ion-row color='gold'>
 
       <ion-col *ngIf="new_coin">
-          <p>Market cap: {{new_coin_sym}} {{new_coin_market}}</p>
+          <p float-left>Market cap:</p><p float-right> {{new_coin_sym}} {{new_coin_market}}</p>
       </ion-col>
       
       <ion-col color='gold' *ngIf="new_coin == null">
-        <p>Market cap: $ {{coinmarket}}</p>
+        <p float-left>Market cap:</p><p float-right> $ {{coinmarket}}</p>
       </ion-col>
 
     </ion-row>
@@ -63,12 +73,18 @@
         </ion-select>
       </ion-item>
 
-    <button color='gold' ion-button (click)="convert()" round block outline>CONVERT</button>
-    <button  color='gold' ion-button (click)="newFav()"*ngIf="username != null" round block outline>
+      
+      <button color='gold' ion-button (click)="convert()" round block outline>CONVERT</button>
+      <button  color='gold' ion-button (click)="newFav()"*ngIf="username != null" round block outline>
         <ion-icon name="heart"></ion-icon>
         ADD TO FAVORITE
-    </button>
-    
+      </button>
+      <br><br>
+      <ion-row>
+        <ion-col>
+            <p *ngIf="new_coin">{{coin.symbol}} to {{new_coin_sym}}: {{new_coin.price}}</p>
+        </ion-col>
+      </ion-row>
   </ion-grid>
 
 </ion-content>
