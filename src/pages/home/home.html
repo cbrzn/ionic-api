@@ -37,7 +37,7 @@
 				<button ion-button *ngIf="all == false" (click)='allCoins()' color='dark' color='gold' round block outline end>SHOW ALL COINS</button>
 				
 				<ion-list>
-					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
+					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='coinModal(currentItems[in].id)'>
 							{{item.name}}
 								<ion-note item-end>
  									{{item.symbol}} {{item.rank}}
@@ -52,7 +52,8 @@
 </ion-content>
 
 <ion-footer *ngIf="username != null">
-		<ion-toolbar text-center="" color="dark">
+		<footer-tabs> </footer-tabs>	
+	<!-- <ion-toolbar text-center="" color="dark">
 				<ion-buttons>
 						<button ion-button (click)="favView()">
 							<ion-icon name="heart"></ion-icon>
@@ -64,5 +65,5 @@
 							<ion-icon name="construct"></ion-icon>
 						</button>
 					</ion-buttons>
-			</ion-toolbar>
+			</ion-toolbar> -->
 	</ion-footer>

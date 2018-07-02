@@ -38,7 +38,6 @@ export class HomePage {
   
   ionViewDidLoad() {
     this.allCoins()
-    
   } 
 
   compare = (a,b) => {
@@ -261,3 +260,4 @@ export class HomePage {
   }
   
 }
+
