@@ -17,6 +17,7 @@ import { SessionService } from '../providers/session-service/session-service';
 import { AccountPage } from '../pages/account/account';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { CalculatorPage } from '../pages/calculator/calculator';
+import { FooterTabsComponent } from '../components/footer-tabs/footer-tabs';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CalculatorPage } from '../pages/calculator/calculator';
     HeaderMenuComponent,
     AccountPage,
     FavoritesPage,
-    CalculatorPage
+    CalculatorPage,
+    FooterTabsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import { CalculatorPage } from '../pages/calculator/calculator';
     LoginPage,
     SignupPage,
     HeaderMenuComponent,
+    FooterTabsComponent,
     AccountPage,
     FavoritesPage,
     CalculatorPage

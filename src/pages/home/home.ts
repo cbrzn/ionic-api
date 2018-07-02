@@ -95,7 +95,7 @@ export class HomePage {
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
-        buttons: ['Dismiss']
+        buttons: ['Try again']
       });
       alert.present();
       alert.onDidDismiss(() => {
@@ -131,7 +131,7 @@ export class HomePage {
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
-        buttons: ['Dismiss']
+        buttons: ['Try again']
       });
       alert.present();
       alert.onDidDismiss(() => {
@@ -195,12 +195,8 @@ export class HomePage {
     this.request.coinDetails(id).subscribe(response => {
       loading.dismiss()
       const coin = response.data
-      console.log(coin);
       const coinprice = coin.quotes.USD.price;
-      
-
       const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d  \d)+(?!\d))/g, "$1.");
-      console.log(coinmarket);
       this.navCtrl.push(CoinDetailsPage, {
         coin, coinmarket, coinprice
       });
@@ -208,7 +204,7 @@ export class HomePage {
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
-        buttons: ['Dismiss']
+        buttons: ['Try again']
       });
       alert.present();
       
@@ -227,7 +223,6 @@ export class HomePage {
     this.request.coinDetails(id).subscribe(response => {
       loading.dismiss()
       const coin = response.data
-      console.log(coin);
       const coinprice = coin.quotes.USD.price;
       const coinmarket = coin.quotes.USD.market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
       let modal = this.modalCtrl.create(CoinDetailsPage, {
@@ -238,7 +233,7 @@ export class HomePage {
       let alert = this.alertCtrl.create({
         title: 'Conection error',
         subTitle: 'Please check your internet conection',
-        buttons: ['Dismiss']
+        buttons: ['Try again']
       });
       alert.present();
       alert.onDidDismiss(() => {

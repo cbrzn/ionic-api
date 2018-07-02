@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Sender } from "../../providers/sender/sender";
-
+import { HomePage } from "../home/home"
 /**
  * Generated class for the CalculatorPage page.
  *
@@ -25,10 +25,11 @@ export class CalculatorPage {
   crypto:string = this.crypto_coins[0]
   fiat:string = this.all_coins[0]
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
+    public alertCtrl: AlertController, 
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
-    private sender: Sender
+    private sender: Sender,
   ) {
   }
 
@@ -40,10 +41,14 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(1, "USD").subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
-      this.fiat_actual_price = response.data.quotes.USD.price
-      this.fiat_value = response.data.quotes.USD.price
+      this.fiat_value, this.fiat_actual_price = response.data.quotes.USD.price
     }, err => {
-
+      loading.dismiss()
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection and try again later',
+        buttons: ['Dismiss']
+      });
     })
   }
 
@@ -86,11 +91,14 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
-      this.fiat_actual_price = response.data.quotes[this.fiat].price
-      this.fiat_value = response.data.quotes[this.fiat].price
+      this.fiat_value, this.fiat_actual_price = response.data.quotes[this.fiat].price
     }, error => {
-      console.log(error)
-    })  
+      loading.dismiss()
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection and try again later',
+        buttons: ['Dismiss']
+      });    })  
   }
 
   newCrypto() {
@@ -102,19 +110,14 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
-        this.fiat_actual_price = response.data.quotes[this.fiat].price
-        this.fiat_value = response.data.quotes[this.fiat].price
-    // }, error => {
-    //   loading.dismiss()
-    //   let alert = this.alertCtrl.create({
-    //     title: 'Conection error',
-    //     subTitle: 'Please check your internet conection',
-    //     buttons: ['Dismiss']
-    //   });
-    //   alert.present();
-    //   alert.onDidDismiss(() => {
-    //     this.navCtrl.setRoot(HomePage)
-    //   })
+      this.fiat_value, this.fiat_actual_price = response.data.quotes[this.fiat].price
+    }, error => {
+      loading.dismiss()
+      let alert = this.alertCtrl.create({
+        title: 'Conection error',
+        subTitle: 'Please check your internet conection and try again later',
+        buttons: ['Dismiss']
+      });
     })
   }
 }
