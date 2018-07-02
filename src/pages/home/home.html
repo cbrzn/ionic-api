@@ -37,16 +37,11 @@
 				<button ion-button *ngIf="all == false" (click)='allCoins()' color='dark' color='gold' round block outline end>SHOW ALL COINS</button>
 				
 				<ion-list>
-<<<<<<< HEAD
-					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='coinModal(currentItems[in].id)'>
-						{{item.name}} {{item.symbol}} {{item.rank}}
-=======
 					<ion-item class="transparent" color='gold' *ngFor="let item of currentItems; let in = index" (click)='certainCoin(currentItems[in].id)'>
 							{{item.name}}
 								<ion-note item-end>
  									{{item.symbol}} {{item.rank}}
 								</ion-note>
->>>>>>> 1b1f832270a04d5f4aeefbf054d115ad43566d9a
 					</ion-item>
 		
 				</ion-list>
