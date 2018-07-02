@@ -43,25 +43,34 @@ export class CoinDetailsPage {
   }
 
   convert() {
-    let loading = this.loadingCtrl.create({
-      content: 'Loading stats'
-    })
-    loading.present()
-    this.request.coinDetailsConverted(this.coin.id, this.currency).subscribe(response => {
-      loading.dismiss()
-      this.new_coin_market = response.data.quotes[this.currency].market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-      this.new_coin = response.data.quotes[this.currency]
-      this.new_coin_sym = this.currency
-    }, err => {
+    if (this.currency == null) {
       let alert = this.alertCtrl.create({
-        title: 'Conection error',
-        subTitle: 'Please check your internet conection',
+        title: 'Error',
+        subTitle: 'You need to select a currency',
         buttons: ['Dismiss']
       });
       alert.present()
-    })
+    } else {
+      let loading = this.loadingCtrl.create({
+        content: 'Loading stats'
+      })
+      loading.present()
+      this.request.coinDetailsConverted(this.coin.id, this.currency).subscribe(response => {
+        loading.dismiss()
+        this.new_coin_market = response.data.quotes[this.currency].market_cap.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        this.new_coin = response.data.quotes[this.currency]
+        this.new_coin_sym = this.currency
+      }, err => {
+        let alert = this.alertCtrl.create({
+          title: 'Conection error',
+          subTitle: 'Please check your internet conection',
+          buttons: ['Dismiss']
+        });
+        alert.present()
+      })
+    }
   }
-
+    
   newFav() {
     this.nativeStorage.getItem(this.username).then(data => {
       if (data.fav == null) {

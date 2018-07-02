@@ -19,6 +19,8 @@ export class CalculatorPage {
   all_coins:Array<string> = ["USD", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR", "BTC", "ETH", "XRP", "LTC", "BCH"]
   crypto_value:number
   fiat_value:number
+  crypto_actual_price:number = 1
+  fiat_actual_price:number
   id:Number
   crypto:string = this.crypto_coins[0]
   fiat:string = this.all_coins[0]
@@ -26,7 +28,8 @@ export class CalculatorPage {
     public navCtrl: NavController, 
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
-    private sender: Sender) {
+    private sender: Sender
+  ) {
   }
 
   ionViewDidLoad() {
@@ -65,34 +68,14 @@ export class CalculatorPage {
   }
 
   calculateByCrypto() {
-    let loading = this.loadingCtrl.create({
-      content: 'Loading info'
-    })
-    loading.present()
-    this.checkId()
-    this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
-      loading.dismiss()
-      this.fiat_value = this.crypto_value * response.data.quotes[this.fiat].price
-    }, error => {
-      console.log(JSON.stringify(error))
-    })
+    this.fiat_value = this.crypto_value * this.fiat_actual_price
   }
 
 
   calculateByFiat() {
-    let loading = this.loadingCtrl.create({
-      content: 'Loading info'
-    })
-    loading.present()
-    this.checkId()
-    this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
-      loading.dismiss()
-        this.crypto_value = this.fiat_value / response.data.quotes[this.fiat].price
-      }, error => {
-        console.log(JSON.stringify(error))
-      })
-   }
-
+      this.crypto_value = this.fiat_value / this.fiat_actual_price
+  }
+  
   newFiat() {
     let loading = this.loadingCtrl.create({
       content: 'Loading info'
@@ -102,6 +85,7 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
+      this.fiat_actual_price = response.data.quotes[this.fiat].price
       this.fiat_value = response.data.quotes[this.fiat].price
     }, error => {
       console.log(error)
@@ -117,7 +101,8 @@ export class CalculatorPage {
     this.sender.coinDetailsConverted(this.id, this.fiat).subscribe(response => {
       loading.dismiss()
       this.crypto_value = 1
-      this.fiat_value = response.data.quotes[this.fiat].price
+        this.fiat_actual_price = response.data.quotes[this.fiat].price
+        this.fiat_value = response.data.quotes[this.fiat].price
     // }, error => {
     //   loading.dismiss()
     //   let alert = this.alertCtrl.create({
